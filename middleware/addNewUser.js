@@ -1,4 +1,3 @@
-
 var mysql   = require("mysql2");
 let bcrypt = require("bcrypt");
 var connection = require("../database");
@@ -18,6 +17,8 @@ try {
 	  email: req.body.email,
 	  password: hashedPassword, // Mot de passe sécurisé
 	  telephone: req.body.telephone,
+	  // Forcer le rôle à 'user' côté backend, sauf si explicitement 'admin' (ex: création admin par un superadmin)
+	  role: req.body.role === 'admin' ? 'admin' : 'user',
   };
 
 

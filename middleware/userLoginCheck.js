@@ -35,7 +35,7 @@ const userLoginCheck = async (req, res) => {
 
       // Génération du token JWT avec payload
       const payload = {
-        user_id: user.user_id,
+        user_id: user.id, // Correction : correspond à la colonne 'id' de la table 'utilisateurs'
         email: user.email,
       };
 
@@ -43,7 +43,7 @@ const userLoginCheck = async (req, res) => {
 
       // Insertion du token dans la table access_token
       const data = {
-        user_id: user.user_id,
+        user_id: user.id, // Correction ici aussi
         access_token: token,
       };
 
@@ -60,9 +60,14 @@ const userLoginCheck = async (req, res) => {
         return res.status(200).json({
           success: true,
           message: "Connexion réussie",
-          currUser: user.user_id,
-          email: user.email,
           token: token,
+          user: {
+            id: user.id,
+            nom: user.nom,
+            prenom: user.prenom,
+            email: user.email,
+            role: user.role,
+          },
         });
       });
     });
